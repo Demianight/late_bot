@@ -8,7 +8,7 @@ AUTH_USER_MODEL = 'users.User'
 SECRET_KEY = 'django-insecure-5i9w1ipq_7+qhrxr8e@owc#@2ufj8$83)2%ez&w&8#$i*%oh6%'
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -57,7 +57,7 @@ WSGI_APPLICATION = 'db.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'database/db.sqlite3',
     }
 }
 

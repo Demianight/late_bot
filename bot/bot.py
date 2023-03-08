@@ -9,7 +9,7 @@ TG_TOKEN = os.getenv('TG_TOKEN')
 DEMIAN_ID = os.getenv('DEMIAN_ID')
 DB_TOKEN = os.getenv('DB_TOKEN')
 HEADERS = {'Authorization': f'{DB_TOKEN}'}
-ENDPOINT = 'http://127.0.0.1:8000/api/students/'
+ENDPOINT = 'http://db:8000/api/students/'
 
 
 def send_message(bot: Bot, message, id):
@@ -26,7 +26,7 @@ def api_answer():
 
 def build_message(response):
     '''
-    This functions parses DB and build message for sending.
+    This functions parses DB response and build message for sending.
     '''
     message = ''
     for student in response:
