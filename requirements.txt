@@ -1,0 +1,2 @@
+-r bot/bot_requirements.txt
+-r db/db_requirements.txt
