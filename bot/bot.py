@@ -47,19 +47,18 @@ def build_message(response):
     return message
 
 
-def update_db(user_id, late, missing):
+def update_db(student_id, late, missing):
     '''
     This functions updates DB data on receiving message.
     '''
     data = {
-        'tg_id': user_id,
         'is_late': late,
         'is_missing': missing
     }
-
-    response = Response(data)
-    return response
-
+    requests.patch(
+        url=ENDPOINT + f'{student_id}/',
+        data=data,
+    )
 
 def send_data(bot: Bot, update):
     
