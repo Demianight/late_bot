@@ -3,13 +3,10 @@ services:
 
   db:
     container_name: db
-    # image: demianight/diploma_project:latest
     build: ../db/.
     restart: always
     volumes:
-      - static_dir:/app/static/
-      - media_dir:/app/media/
-      - db_data:/app/database/
+
   bot:
     container_name: bot
     build: ../bot/.
@@ -25,15 +22,6 @@ services:
       - 80:80
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
-      - ../frontend/build:/usr/share/nginx/html/
-      - ../docs/:/usr/share/nginx/html/api/redoc/
-      - static_dir:/etc/nginx/html/static/
-      - media_dir:/etc/nginx/html/media/
     depends_on:
       - bot
       - db
-
-volumes:
-  static_dir:
-  media_dir:
-  db_data:

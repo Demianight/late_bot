@@ -1,21 +1,13 @@
 from telegram import Bot, InlineKeyboardButton
 from telegram.ext import Updater, CommandHandler
-from dotenv import load_dotenv
-import os
 import requests
-# from rest_framework.response import Response
-
-
-load_dotenv()
-
-TG_TOKEN = os.getenv('TG_TOKEN')
-DEMIAN_ID = os.getenv('DEMIAN_ID')
-NIKITA_ID = os.getenv('NIKITA_ID')
-DB_TOKEN = os.getenv('DB_TOKEN')
-HEADERS = {'Authorization': f'{DB_TOKEN}'}
-ENDPOINT = 'http://db:8000/api/students/'
+from const_data import (
+    TG_TOKEN, DB_TOKEN, DEMIAN_ID, NIKITA_ID, HEADERS, ENDPOINT, OPINION,
+    BUTTONS, late_button, missing_button, passing_button
+)
 
 updater = Updater(token=TG_TOKEN)
+bot = Bot(token=TG_TOKEN)
 
 
 def send_message(bot: Bot, message, id):
@@ -62,37 +54,20 @@ def update_db(student_id, late, missing):
 
 
 def send_data(bot: Bot, update):
-
-    opinion = 'Ваше мнение очень важно для нас. Мы вам обязательно перезвоним.'
-    late_button = InlineKeyboardButton(
-        'Я опоздаю', callback_data='Спасибо за честность'
-    )
-    passing_button = InlineKeyboardButton(
-        'Я не приду', callback_data='Тебя никто не и не ждал'
-    )
-    missing_button = InlineKeyboardButton(
-        'Я приду позже', callback_data='Эрик, разлогинься пж'
-    )
-    buttons = [late_button, passing_button, missing_button]
     bot.send_message(
-        chat_id=NIKITA_ID,
+        chat_id=DEMIAN_ID,
         text='Привет, почетный огурец! Сообщи, придешь ли ты',
-        reply_markup=buttons
+        reply_markup=BUTTONS
     )
 
-    for button in buttons:
+    for button in BUTTONS:
+        late = False
+        is_passing = False
+        is_missing = 0
         if button == late_button:
             late = True
-            is_passing = False
-            is_missing = 0
-            res = [late, is_passing, is_missing]
-            bot.send_message(opinion)
         elif button == passing_button:
             is_passing = True
-            late = False
-            is_missing = 0
-            res = [late, is_passing, is_missing]
-            bot.send_message(opinion)
         elif button == missing_button:
             for i in range(2, 7):
                 lesson = InlineKeyboardButton(str(i))
@@ -103,10 +78,8 @@ def send_data(bot: Bot, update):
                     )
             user_response = update.message
             is_missing = user_response
-            is_passing = False
-            late = False
-            res = [late, is_passing, is_missing]
-            bot.send_message(opinion)
+        res = [late, is_passing, is_missing]
+        bot.send_message(OPINION)
         return res
 
 
@@ -114,11 +87,11 @@ def main():
     '''
     Main script for running bot 24/7.
     '''
-    updater.dispatcher.add_handler(CommandHandler('start'), send_data)
+    updater.dispatcher.add_handler(CommandHandler('start', send_data))
 
     answer = api_answer()
     message = build_message(answer)
-    send_message(message, NIKITA_ID)
+    send_message(bot=bot, message='Halou', id=DEMIAN_ID)
     data = send_data()
     update_db(data)
 
