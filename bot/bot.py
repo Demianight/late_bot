@@ -18,7 +18,7 @@ def send_message(bot: Bot, message, id):
 
 
 def api_answer():
-    response = requests.get(ENDPOINT, headers=HEADERS)
+    response = requests.get(ENDPOINT)
     return response.json()
 
 
@@ -91,7 +91,8 @@ def main():
 
     answer = api_answer()
     message = build_message(answer)
-    send_message(bot=bot, message='Halou', id=DEMIAN_ID)
+
+    send_message(bot=bot, message='Никита доделай бота', id=DEMIAN_ID)
     data = send_data()
     update_db(data)
 

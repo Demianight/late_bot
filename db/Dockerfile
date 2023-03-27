@@ -4,12 +4,12 @@ WORKDIR /app
 
 COPY db_requirements.txt .
 
+RUN pip3 install pip --upgrade
+
 RUN pip3 install -r db_requirements.txt --no-cache-dir
 
 COPY . .
 
-RUN ls -a
+RUN python3 manage.py makemigrations; python3 manage.py migrate; python3 manage.py loaddata fixtures.json
 
-RUN python3 manage.py makemigrations; python3 manage.py migrate
-
-CMD ["gunicorn", "db.wsgi:application", "--bind", "0:8000" ]
+CMD ["gunicorn", "db.wsgi:application", "--bind", "0.0.0.0"]
