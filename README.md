@@ -17,6 +17,10 @@ Db module:
 - DRF
 - Celery + Redis (for scheduled tasks) (new expirience)
 
+# Make it work
+
+```Coming soon```
+
 Authors:
 - Demianight - Database, Celery and network stuff 
 - mazazyrik - logic, realization, creative part of Telegram Bot
