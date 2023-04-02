@@ -21,7 +21,7 @@ Db module:
 
 ```Coming soon```
 
-Authors:
+# Authors:
 - Demianight - Database, Celery and network stuff 
 - mazazyrik - logic, realization, creative part of Telegram Bot
 
