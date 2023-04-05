@@ -1,2 +1,3 @@
--r bot/bot_requirements.txt
--r db/db_requirements.txt
+-r bot/requirements.txt
+-r db/requirements.txt
+python-dotenv==1.0.0

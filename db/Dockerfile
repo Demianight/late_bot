@@ -2,11 +2,11 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-COPY db_requirements.txt .
+COPY requirements.txt .
 
 RUN pip3 install pip --upgrade
 
-RUN pip3 install -r db_requirements.txt --no-cache-dir
+RUN pip3 install -r requirements.txt --no-cache-dir
 
 COPY . .
 
